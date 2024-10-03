@@ -1,6 +1,7 @@
 import map_bg from "@/public/images/map_bg.png";
 import MapSlide from "@/components/MapSlide";
-import map_needle from "@/public/images/map_needle.png";
+import map_needle from "@/public/images/map_needle.svg";
+import Image from "next/image";
 
 
 export default function Home() {
@@ -14,14 +15,25 @@ export default function Home() {
         }}
       >
         <MapSlide />
-      
         <div
-            className="absolute bottom-0 w-[20px] h-[50px] left-[50%] translate-x-[-50%] opacity-50"
+            className="absolute bottom-0 w-[50px] h-[50px] left-[50%] translate-x-[-50%] opacity-70"
             style={{
-            backgroundImage: `url(${map_needle.src})`,
-            backgroundSize: "cover",
+                mixBlendMode: "difference", // Invert background under the SVG
             }}
-        ></div>
+        >
+            <Image
+                src={map_needle}
+                alt="Map Needle"
+                width={50}
+                height={50}
+                style={{
+                    transform: "scaleX(0.4) scaleY(0.8)",
+                    transformOrigin: "bottom",
+                }}
+            />
+        </div>
+
+        
       </div>
     </main>
   );
