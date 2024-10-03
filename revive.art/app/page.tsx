@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background text-foreground">
       <div
-        className="map-container w-[200vw] min-h-[680px] relative"
+        className="map-container w-full min-h-[723px] relative"
         style={{
           backgroundImage: `url(${map_bg.src})`,
           backgroundSize: "cover",

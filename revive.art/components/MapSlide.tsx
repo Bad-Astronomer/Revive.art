@@ -1,9 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import map_compass from "@/public/images/map_compass.png";
 import map_grid from "@/public/images/map_grid.png";
+
+
+function MapContentLeft(){
+    return(
+        <>
+            <>
+                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute bottom-0 right-0"></div>
+            </>
+        </>
+    )
+}
+
+function MapContentCenter(){
+    return(
+        <>
+            <>
+                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute top-0"></div>
+                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute bottom-0 right-0"></div>
+            </>
+        </>
+    )
+}
+
+function MapContentRight(){
+    return(
+        <>
+            <>
+                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute top-0"></div>
+            </>
+        </>
+    )
+}
+
 
 export default function MapSlide() {
     const [mouseX, setMouseX] = useState(0);
@@ -20,45 +53,49 @@ export default function MapSlide() {
         };
     }, []);
 
-    // Interpolate mouse position to -30vw to 30vw
-    const translateX = -((mouseX / window.innerWidth) * 50); // Range 0vw to 60vw
+    const translateX = -((mouseX / window.innerWidth) * 50);
 
     return (
         <motion.div
         id="map-slide"
         className="absolute inset-0"
-        // Animate the x translation based on mouse position
         animate={{ x: `${translateX}vw` }}
-        transition={{ type: "tween", ease: [0.15, 1, 1, 1], duration: 2 }} // Smooth transition
+        transition={{ type: "tween", ease: [0.15, 1, 1, 1], duration: 2 }}
         >
         <div className="map-grid w-[150vw] p-[10vw 0] m-auto h-full flex">
             <div
-            className="map-side flex-1"
+            className="map-side flex-1 relative"
             style={{
                 backgroundImage: `url(${map_grid.src})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
+                backgroundPosition: "right",
             }}
-            ></div>
+            >
+                <MapContentLeft />
+            </div>
             <div
-            className="map-center flex-1"
+            className="map-center flex-1 relative"
             style={{
                 backgroundImage: `url(${map_grid.src})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
+                backgroundPosition: "left",
             }}
-            ></div>
+            >
+                <MapContentCenter />
+            </div>
             <div
-            className="map-side flex-1"
+            className="map-side flex-1 relative:"
             style={{
                 backgroundImage: `url(${map_grid.src})`,
                 backgroundSize: "cover",
                 backgroundRepeat: "no-repeat",
-                backgroundPosition: "center",
+                backgroundPosition: "left",
             }}
-            ></div>
+            >
+                <MapContentRight />
+            </div>
         </div>
 
         <div
