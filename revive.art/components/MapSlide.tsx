@@ -10,7 +10,7 @@ export default function MapSlide() {
 
     // Capture the mouse movement
     useEffect(() => {
-        const handleMouseMove = (e) => {
+        const handleMouseMove = (e: MouseEvent) => {
         setMouseX(e.clientX); // Track mouse X position
         };
 
