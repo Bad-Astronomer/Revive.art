@@ -33,29 +33,72 @@ function MapContentRight(){
 
 
 export default function MapSlide() {
+    const cap = (value: number, min: number, max: number) => {
+        value = Math.min(value, max);
+        value = Math.max(value, min);
+        return value;
+    }
+
+    const normalize = (value: number ,oldMin: number, oldMax: number,
+            newMin: number, newMax: number, capToggle: boolean = true) => {
+        
+        value = (value - oldMin)/(oldMax - oldMin);
+        value = (value * (newMax - newMin)) + newMin;
+        if(capToggle){
+            value = cap(value, newMin, newMax);
+        }
+        return value;
+    }
+
     const [mouseX, setMouseX] = useState(0);
+    const [windowlen, setwindowlen] = useState(window.innerWidth);
 
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-        setMouseX(e.clientX);
+        const handleMouseOut = () => {
+            setMouseX(window.innerWidth/2);
         };
 
+        const handleMouseMove = (e: MouseEvent) => {
+            setMouseX(e.clientX);
+        };
+        
         window.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseout", handleMouseOut);
+
         return () => {
-        window.removeEventListener("mousemove", handleMouseMove);
+            console.log(mouseX);
+            window.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseout", handleMouseOut);
+        };
+
+    }, [mouseX]);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setwindowlen(window.innerWidth);
+        };
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("load", handleResize);
         };
     }, []);
 
-    const translateX = -((mouseX / window.innerWidth) * 50);
+    // const translateX = -((mouseX / window.innerWidth) * 50);
+    // const translateX = 0;
+    const offset = 2400 - windowlen;
+    const translateX = normalize(mouseX, 0, windowlen, 0, offset);
+    // const translateX = normalize(mouseX, 0, windowlen, -50, 50);
+    console.log(translateX);
 
     return (
         <motion.div
         id="map-slide"
         className="absolute inset-0"
-        animate={{ x: `${translateX}vw` }}
-        transition={{ type: "tween", ease: [0.30, 1, 1, 1], duration: 2 }}
+        animate={{ x: `-${translateX}px` }}
+        transition={{ type: "tween", ease: [0.40, 1, 1, 1], duration: 2 }}
         >
-        <div className="map-grid w-[150vw] p-[10vw 0] m-auto h-full flex">
+        
+        <div className="map-grid w-[2400px] p-[10vw 0] m-auto h-full flex">
             <div
             className="map-side flex-1 relative"
             style={{
@@ -92,7 +135,7 @@ export default function MapSlide() {
         </div>
 
         <div
-            className="map-compass absolute w-[150vw] bottom-0 my-2 h-[30px]"
+            className="map-compass absolute w-[2400px] bottom-0 my-2 h-[30px]"
             style={{
             backgroundImage: `url(${map_compass.src})`,
             backgroundSize: "cover",
