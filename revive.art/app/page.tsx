@@ -8,7 +8,7 @@ export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-background text-foreground">
       <div
-        className="map-container w-full min-h-[640px] relative"
+        className="map-container w-full min-h-[680px] relative isolate"
         style={{
           backgroundImage: `url(${map_bg.src})`,
           backgroundSize: "cover",
@@ -18,7 +18,7 @@ export default function Home() {
         <div
             className="absolute bottom-0 w-[50px] h-[50px] left-[50%] translate-x-[-50%] opacity-70"
             style={{
-                mixBlendMode: "difference", // Invert background under the SVG
+                mixBlendMode: "difference", // Invert background behind needle
             }}
         >
             <Image
