@@ -1,16 +1,21 @@
 "use client";
 
+import MapContent from "./MapContent";
 import React, { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import map_compass from "@/public/images/map_compass.png";
 import map_grid from "@/public/images/map_grid.png";
+import "@/app/globals.css";
 
 
 
-export default function MapSlide() {
-    const slideHeight = 680;
-    const slideWidth = 2400;
+type MapSlideProps = {
+    slideHeight: number,
+    slideWidth: number
+}
 
+
+export default function MapSlide({slideHeight, slideWidth}: MapSlideProps) {
 
     // * Slide Logic
     const slideRef = useRef<HTMLDivElement>(null);
@@ -61,39 +66,19 @@ export default function MapSlide() {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [windowlen]);
 
     const offset = slideWidth - windowlen;
     const translateX = normalize(mouseX, 0, windowlen, 0, offset);
 
-
-    // * Map Content
-    const calcCardCords = (ijwh: number[]) => {
-        const xywh: number[] = [0, 0, 0, 0]
-        const unit = slideHeight/16;
-
-        ijwh.forEach((value, index) => {
-            xywh[index] = value * unit;
-        })
-        
-        return xywh;
-    }
-
     function MapContentLeft(){
-        const card1Cords = calcCardCords([-2, 1, 4, 5]);
+        const cardCords = [
+                                [-2, 1, 4, 5],
+                                [ 4, 4, 4, 5],
+                                [ 10, 1, 4, 5],
+                            ]
         
-        return(
-            <>
-                <div className="map-content aspect-square bg-red-200 absolute z-10"
-                    style={{
-                        right: `${card1Cords[0]}px`,
-                        top: `${card1Cords[1]}px`,
-                        width: `${card1Cords[2]}px`,
-                        height: `${card1Cords[3]}px`,
-                    }}
-                ></div>
-            </>
-        )
+        return <MapContent slideHeight={slideHeight} cardCords={cardCords} />
     }
     
     function MapContentRight(){

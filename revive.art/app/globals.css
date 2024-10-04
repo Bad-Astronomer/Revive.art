@@ -10,3 +10,11 @@
 body::-webkit-scrollbar {
   display: none;
 }
+
+.map-content-card{
+  border: 1px solid #3f3f3f;
+}
+
+.map-content-card:hover{
+  border: 1px solid #f0f0f0;
+}
