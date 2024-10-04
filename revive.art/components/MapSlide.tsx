@@ -9,9 +9,7 @@ import map_grid from "@/public/images/map_grid.png";
 function MapContentLeft(){
     return(
         <>
-            <>
-                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute bottom-0 right-0"></div>
-            </>
+            <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute bottom-0 right-0"></div>
         </>
     )
 }
@@ -19,10 +17,8 @@ function MapContentLeft(){
 function MapContentCenter(){
     return(
         <>
-            <>
-                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute top-0"></div>
-                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute bottom-0 right-0"></div>
-            </>
+            <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute top-0"></div>
+            <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute bottom-0 right-0"></div>
         </>
     )
 }
@@ -30,9 +26,7 @@ function MapContentCenter(){
 function MapContentRight(){
     return(
         <>
-            <>
-                <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute top-0"></div>
-            </>
+            <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute top-0"></div>
         </>
     )
 }
@@ -41,10 +35,9 @@ function MapContentRight(){
 export default function MapSlide() {
     const [mouseX, setMouseX] = useState(0);
 
-    // Capture the mouse movement
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent) => {
-        setMouseX(e.clientX); // Track mouse X position
+        setMouseX(e.clientX);
         };
 
         window.addEventListener("mousemove", handleMouseMove);
@@ -60,7 +53,7 @@ export default function MapSlide() {
         id="map-slide"
         className="absolute inset-0"
         animate={{ x: `${translateX}vw` }}
-        transition={{ type: "tween", ease: [0.15, 1, 1, 1], duration: 2 }}
+        transition={{ type: "tween", ease: [0.30, 1, 1, 1], duration: 2 }}
         >
         <div className="map-grid w-[150vw] p-[10vw 0] m-auto h-full flex">
             <div
