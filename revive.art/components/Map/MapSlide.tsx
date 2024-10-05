@@ -70,24 +70,6 @@ export default function MapSlide({slideHeight, slideWidth}: MapSlideProps) {
 
     const offset = slideWidth - windowlen;
     const translateX = normalize(mouseX, 0, windowlen, 0, offset);
-
-    function MapContentLeft(){
-        const cardCords = [
-                                [-2, 1, 4, 5],
-                                [ 4, 4, 4, 5],
-                                [ 10, 1, 4, 5],
-                            ]
-        
-        return <MapContent slideHeight={slideHeight} cardCords={cardCords} />
-    }
-    
-    function MapContentRight(){
-        return(
-            <>
-                {/* <div className="map-content h-[calc(100%/16)] aspect-square bg-red-200 absolute top-0"></div> */}
-            </>
-        )
-    }
     
     return (
         <motion.div
@@ -109,7 +91,7 @@ export default function MapSlide({slideHeight, slideWidth}: MapSlideProps) {
                 backgroundPosition: "right top",
             }}
             >
-                <MapContentLeft />
+                <MapContent slideHeight={slideHeight}/>
             </div>
             <div
             className="flex-1 relative"
@@ -119,9 +101,7 @@ export default function MapSlide({slideHeight, slideWidth}: MapSlideProps) {
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "left top",
             }}
-            >
-                <MapContentRight />
-            </div>
+            ></div>
         
         </div>
 

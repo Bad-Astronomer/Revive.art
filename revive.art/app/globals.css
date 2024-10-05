@@ -18,3 +18,10 @@ body::-webkit-scrollbar {
 .map-content-card:hover{
   border: 1px solid #f0f0f0;
 }
+
+.map-content-image{
+  filter: saturate(0) blur(0.2px);
+}
+.map-content-image:hover{
+  filter: saturate(1) blur(0px);
+}
