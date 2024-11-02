@@ -12,7 +12,7 @@ export default function Map() {
 
     return (
         <div
-            className="map-container w-full relative isolate"
+            className="map-container w-full relative isolate overflow-x-hidden"
             style={{
                 backgroundImage: `url(${map_bg.src})`,
                 backgroundSize: "cover",
