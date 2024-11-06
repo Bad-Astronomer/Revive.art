@@ -25,9 +25,9 @@ body::-webkit-scrollbar {
 
 .crt-effect-container{
   background: linear-gradient(#3f3f3f, #000 10px, black 45px, #3f3f3f 75px);
-  background-size: 75px 75px;
+  background-size: 100px 100px;
   background-repeat: repeat;
-  animation: crt-effect-animation 10s linear infinite;
+  animation: crt-effect-animation 30s linear infinite;
 }
 
 @keyframes crt-effect-animation {
@@ -41,10 +41,7 @@ body::-webkit-scrollbar {
 
 .crt-screen-container{
   position: absolute;
-  /* top: 220px;
-  left: 460px;
-  width: 510px;
-  height: 370px; */
+  filter: saturate(0.15);
   background: linear-gradient(
     to right, 
     red 14.28%, 
