@@ -53,3 +53,13 @@ body::-webkit-scrollbar {
     violet 85.68%
   );
 }
+
+.home-header{
+  font-size: 6em;
+  text-align: center;
+  translate: 0 calc(50vh - 100%);
+}
+
+.highlight{
+  color: rgb(102, 0, 176);
+}

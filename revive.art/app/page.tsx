@@ -2,6 +2,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useTransform, easeIn } from "framer-motion";
+import { Press_Start_2P } from "next/font/google";
+
+
+const press_start_2p = Press_Start_2P({
+  weight: ['400'],
+  subsets: ['latin'],
+})
 
 export default function Home() {
   const [windowSize, setWindowSize] = useState([window.innerWidth, window.innerHeight]);
@@ -27,6 +34,7 @@ export default function Home() {
 
       <div className="crt-tv-container isolate relative h-[200vh]">
         <div className="w-full h-[50vh]">
+          <div className={`home-header ${press_start_2p.className}`}>Revive<span className="highlight">.art</span></div>
         </div>
         <div className="sticky top-0 w-screen h-screen">
           <Image
