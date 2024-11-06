@@ -38,3 +38,21 @@ body::-webkit-scrollbar {
     background-position: 0 -100%;
   }
 }
+
+.crt-screen-container{
+  position: absolute;
+  top: 220px;
+  left: 460px;
+  width: 510px;
+  height: 370px;
+  background: linear-gradient(
+    to right, 
+    red 14.28%, 
+    orange 14.28% 28.56%, 
+    yellow 28.56% 42.84%, 
+    rgb(0, 209, 0) 42.84% 57.12%, 
+    rgb(0, 72, 255) 57.12% 71.4%, 
+    rgb(102, 0, 176) 71.4% 85.68%, 
+    violet 85.68%
+  );
+}
