@@ -57,7 +57,7 @@ body::-webkit-scrollbar {
 .home-header{
   font-size: 6em;
   text-align: center;
-  translate: 0 calc(50vh - 100%);
+  translate: 0 calc(45vh - 100%);
 }
 
 .highlight{
