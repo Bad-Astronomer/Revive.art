@@ -41,7 +41,7 @@ body::-webkit-scrollbar {
 
 .crt-screen-container{
   position: absolute;
-  background: black
+  background: black;
 }
 
 .home-header{
