@@ -17,7 +17,11 @@ export default function SmoothScroller({ children }: { children: ReactNode }) {
 
         const updateScroll = () => {
         lastScrollPos.current += scrollVelocity.current;
+
+        // Boundary Checks
         lastScrollPos.current = Math.max(lastScrollPos.current, 0);
+        lastScrollPos.current = Math.min(lastScrollPos.current, document.body.scrollHeight - window.innerHeight);
+
         animate(scrollY, lastScrollPos.current, { damping: 500 });
 
         scrollVelocity.current *= 0.75;
