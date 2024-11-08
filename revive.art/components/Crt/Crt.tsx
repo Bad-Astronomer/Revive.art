@@ -33,7 +33,7 @@ export default function Crt() {
     const left = useTransform(scrollYProgress, [start_keyframe, mid_keyframe], ["455px", "0px"], { ease: easeIn });
     const width = useTransform(scrollYProgress, [start_keyframe, mid_keyframe], ["520px", `${windowSize[0]}px`], { ease: easeIn });
     const height = useTransform(scrollYProgress, [start_keyframe, mid_keyframe], ["380px", `${windowSize[1]}px`], { ease: easeIn });
-    const color = useTransform(scrollYProgress, [start_keyframe, end_keyframe], ["saturate(0) contast(0.75)", "saturate(1) contrast(1.5)"], { ease: easeIn });
+    const color = useTransform(scrollYProgress, [start_keyframe, end_keyframe], ["saturate(0) contast(0.75) blur(0px)", "saturate(1) contrast(1.5) blur(0px)"], { ease: easeIn });
     const opacity = useTransform(scrollYProgress, [mid_keyframe, end_keyframe], ["0", "1"], { ease: easeIn });
     const border = useTransform(scrollYProgress, [start_keyframe, mid_keyframe], ["1em", "0em"], { ease: easeIn });
 
@@ -57,17 +57,19 @@ export default function Crt() {
                 className="crt-screen-container overflow-hidden relative"
                 style={{ top, left, width, height, filter: color, borderRadius: border }}
             >
-                <Image
-                    className="relative left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-10" 
-                    src="/images/blue-marble.png"
-                    alt="Earth"
-                    width={769}
-                    height={711}
-                />
+                <div className="relative h-full w-full">
+                    <Image
+                        className="relative left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] z-10 max-h-[800px] max-w-[800px] w-full aspect-square" 
+                        src="/images/Apollo_11_Earth.jpg"
+                        alt="Earth"
+                        width={2000}
+                        height={2000}
+                    />
+                </div>
             </motion.div>
             <motion.div
                 className="absolute top-0 left-0 w-full h-full"
-                style={{ background: "linear-gradient(to bottom, transparent 40%, var(--background) 100%)", opacity }}
+                style={{ background: "linear-gradient(to bottom, transparent 30%, var(--background) 100%)", opacity }}
             ></motion.div>
             </div>
         </div>
