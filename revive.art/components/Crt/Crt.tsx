@@ -25,7 +25,7 @@ export default function Crt() {
 
     const { scrollYProgress } = useScroll({target: crtContainerRef});
 
-    const start_keyframe = 0.5;
+    const start_keyframe = 0.4;
     const mid_keyframe = 0.8;
     const end_keyframe = 1;
 
@@ -38,7 +38,7 @@ export default function Crt() {
     const border = useTransform(scrollYProgress, [start_keyframe, mid_keyframe], ["1em", "0em"], { ease: easeIn });
 
     return (
-        <div className={"relative h-[220vh] isolate"} ref={crtContainerRef}>
+        <div className={"relative h-[200vh] isolate"} ref={crtContainerRef}>
             <div className="absolute h-full w-full top-0">
                 <div className="crt-effect-container h-screen w-screen sticky z-0 top-0 left-0"></div>
             </div>
