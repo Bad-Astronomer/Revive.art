@@ -4,10 +4,10 @@ import Map from "@/components/Map/Map";
 
 export default function Home() {
   return (
-    <main className="min-h-screen items-center justify-center bg-background text-foreground">
+    <main className="min-h-screen items-center justify-center">
       <Crt></Crt>
       <div className={`relative top-0 text-center text-[1.5em] w-full text-neutral-400`}> Were you able to recognize our planet? <br/> Color Matters</div>
-      <div className="py-12">
+      <div className="py-40">
         <Map></Map>
       </div>
     </main>
