@@ -76,7 +76,7 @@ export default function Crt() {
             </motion.div>
             <motion.div
                 className="absolute top-0 left-0 w-full h-full z-10"
-                style={{ background: "linear-gradient(to bottom, transparent 30%, var(--background) 100%)", opacity }}
+                style={{ background: "linear-gradient(to bottom, transparent 30%, #0f0f0f 100%)", opacity }}
             ></motion.div>
             </div>
         </div>

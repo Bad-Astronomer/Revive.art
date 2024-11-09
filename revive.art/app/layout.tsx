@@ -15,7 +15,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body style={{fontFamily: "SpaceMono, monospace"}}>
-        <SmoothScroller>{children}</SmoothScroller>
+        <SmoothScroller>
+          <div className="dark">
+            {children}
+          </div>
+        </SmoothScroller>
       </body>
     </html>
   );

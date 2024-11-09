@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 
 const Layout = () => {
@@ -42,10 +42,10 @@ const Layout = () => {
     <>
       <form className="w-1/2 mx-auto" onSubmit={handleUpload} encType="multipart/form-data">
         <input type="file" name="image" id="image" className="hidden" onChange={handleImageChange} />
-        <label htmlFor="image" className="block text-center text-xl font-bold text-white">
+        <label htmlFor="image" className="block text-center text-xl font-bold">
           Upload Image
         </label>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <button type="submit" className="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded-full">
           Upload
         </button>
       </form>
