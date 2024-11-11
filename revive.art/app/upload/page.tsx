@@ -9,6 +9,33 @@ export default function Test() {
         setImage(file);
     };
 
+    const handleUpload = async (event: React.FormEvent) => {
+        event.preventDefault();
+
+        if (!image) return alert('Please select an image to upload.');
+
+        const formData = new FormData();
+        formData.append('file', image);
+        formData.append('upload_preset', process.env.NEXT_PUBLIC_UPLOAD_PRESET as string);
+
+        try {
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD}/image/upload`, {
+            method: 'POST',
+            body: formData,
+            });
+
+            const data = await response.json();
+            if (data.secure_url) {
+            alert('Image uploaded successfully!');
+            console.log('Image URL:', data.secure_url);
+            } else {
+            alert('Failed to upload image.');
+            }
+        } catch (error) {
+            console.error('Error uploading image:', error);
+        }
+    }
+
     return (
         <div className="min-h-screen items-center justify-center w-[50vw] m-auto flex flex-col gap-6">
             <div className="basis-1">
@@ -22,6 +49,7 @@ export default function Test() {
                         className="flex-1 px-4 py-2 border-2 focus:outline-none focus:border-neutral-700 rounded-lg bg-neutral-900 text-neutral-300 placeholder-neutral-300"
                     />
                     <button
+                        onClick={handleUpload}
                         className="gradient-button basis-1/7 w-auto font-bold py-2 px-4 rounded-lg text-zinc-900"
                     >
                         Generate
