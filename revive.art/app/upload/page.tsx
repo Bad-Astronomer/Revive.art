@@ -1,56 +1,33 @@
 "use client";
-import { useState } from 'react';
+import { FileUpload } from "@/components/ui/file-upload";
+import { useState } from "react";
 
+export default function Test() {
+    const [image, setImage] = useState<File | null>(null);
 
-const Layout = () => {
-  const [image, setImage] = useState<File | null>(null);
+    const onFileChange = (file: File | null) => {
+        setImage(file);
+    };
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      setImage(event.target.files[0]);
-    }
-  };
-
-  const handleUpload = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    if (!image) return alert('Please select an image to upload.');
-
-    const formData = new FormData();
-    formData.append('file', image);
-    formData.append('upload_preset', process.env.NEXT_PUBLIC_UPLOAD_PRESET as string);
-
-    try {
-      const response = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD}/image/upload`, {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await response.json();
-      if (data.secure_url) {
-        alert('Image uploaded successfully!');
-        console.log('Image URL:', data.secure_url);
-      } else {
-        alert('Failed to upload image.');
-      }
-    } catch (error) {
-      console.error('Error uploading image:', error);
-    }
-  };
-
-  return (
-    <>
-      <form className="w-1/2 mx-auto" onSubmit={handleUpload} encType="multipart/form-data">
-        <input type="file" name="image" id="image" className="hidden" onChange={handleImageChange} />
-        <label htmlFor="image" className="block text-center text-xl font-bold">
-          Upload Image
-        </label>
-        <button type="submit" className="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded-full">
-          Upload
-        </button>
-      </form>
-    </>
-  );
-};
-
-export default Layout;
+    return (
+        <div className="min-h-screen items-center justify-center w-[50vw] m-auto flex flex-col gap-6">
+            <div className="basis-1">
+                <FileUpload onChange={onFileChange} />
+            </div>
+            {image && (
+                <div className="flex items-center gap-4 w-full max-w-xl">
+                    <input
+                        type="text"
+                        placeholder="Enter text"
+                        className="flex-1 px-4 py-2 border-2 focus:outline-none focus:border-neutral-700 rounded-lg bg-neutral-900 text-neutral-300 placeholder-neutral-300"
+                    />
+                    <button
+                        className="gradient-button basis-1/7 w-auto font-bold py-2 px-4 rounded-lg text-zinc-900"
+                    >
+                        Generate
+                    </button>
+                </div>
+            )}
+        </div>
+    );
+}
