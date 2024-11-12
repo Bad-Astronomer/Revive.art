@@ -3,3 +3,5 @@ python-dotenv
 pillow
 fastapi
 uvicorn
+cloudinary
+python-dotenv

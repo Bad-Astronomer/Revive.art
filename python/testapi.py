@@ -9,6 +9,7 @@ from PIL import Image
 from io import BytesIO
 from uuid import uuid4
 from colorize import colourize_image
+from utils.cludinary_util import upload_to_cloudinary
 
 genai.configure(api_key=os.environ["genai_api_key1"])
 gemini = genai.GenerativeModel(model_name="models/gemini-1.5-flash-latest")
@@ -66,7 +67,8 @@ async def generate(request: GenerateRequest):
         [image, "\n\n", prompt_template.format(prompt=request.prompt)],
     )
     colourised_image = colourize_image(filename=image_name, prompt=response.text)
-    return {"generated_text": response.text, "image_path": image_path}
+    colour_image_url = upload_to_cloudinary(file_path=colourised_image)
+    return {"generated_text": response.text, "image_url": colour_image_url}
 
 if __name__ == "__main__":
     uvicorn.run("testapi:app", host="127.0.0.1", port=8000, reload=True)
