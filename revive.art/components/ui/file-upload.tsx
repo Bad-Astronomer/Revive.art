@@ -26,7 +26,7 @@ export const FileUpload = ({
   const handleFileChange = (newFiles: File[]) => {
     const newFile = newFiles[0];
     setFile(newFile);
-    if (onChange) onChange(newFile); // Pass file to parent component
+    if (onChange) onChange(newFile);
   };
 
   const handleClick = () => {
