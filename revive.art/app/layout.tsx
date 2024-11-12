@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import SmoothScroller from "@/components/SmoothScroller/SmoothScroller";
+import { Toaster } from "@/components/ui/toaster"
 // import { NavbarFloating } from "@/components/ui/NavbarFloating";
 
 export const metadata: Metadata = {
@@ -39,6 +40,7 @@ export default function RootLayout({
               ]}
             /> */}
             {children}
+            <Toaster />
           </div>
         </SmoothScroller>
       </body>

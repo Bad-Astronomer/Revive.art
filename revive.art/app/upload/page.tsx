@@ -1,10 +1,12 @@
 "use client";
 import { FileUpload } from "@/components/ui/file-upload";
 import { useState } from "react";
+import { useToast } from "@/components/hooks/use-toast";
 
 export default function Test() {
     const [image, setImage] = useState<File | null>(null);
     const [prompt, setPrompt] = useState<string>("");
+    const { toast } = useToast();
 
     const onFileChange = (file: File | null) => {
         setImage(file);
@@ -13,29 +15,33 @@ export default function Test() {
     const handleUpload = async (event: React.FormEvent) => {
         event.preventDefault();
 
-        if (!image) return alert('Please select an image to upload.');
-        if (!prompt) return alert('Please enter a prompt.');
+        if (!image) {
+            console.log("No image selected");
+            return toast({ title: "Error", description: "Please select an image to upload." })
+        };
+        if (!prompt){
+            console.log("No prompt entered");
+            return toast({ title: "Error", description: "Please enter a prompt." })
+        };
 
         const formData = new FormData();
-        formData.append('file', image);
-        formData.append('upload_preset', process.env.NEXT_PUBLIC_UPLOAD_PRESET as string);
+        formData.append("file", image);
+        formData.append("upload_preset", process.env.NEXT_PUBLIC_UPLOAD_PRESET as string);
 
         try {
             const cloudinaryResponse = await fetch(`https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUD}/image/upload`, {
-                method: 'POST',
+                method: "POST",
                 body: formData,
             });
 
             const cloudinaryData = await cloudinaryResponse.json();
             if (cloudinaryData.secure_url) {
-                // alert('Image uploaded successfully!');
-                console.log('Image URL:', cloudinaryData.secure_url);
+                toast({ title: "Image Uploaded", description: "Image uploaded to Cloudinary successfully!" });
 
-                // Send both image URL and prompt to the Python backend
-                const backendResponse = await fetch('http://127.0.0.1:8000/generate', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ 
+                const backendResponse = await fetch("http://127.0.0.1:8000/generate", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
                         image_url: cloudinaryData.secure_url,
                         prompt: prompt,
                     }),
@@ -43,15 +49,17 @@ export default function Test() {
 
                 if (backendResponse.ok) {
                     const backendData = await backendResponse.json();
-                    console.log('Response from Python backend:', backendData);
+                    toast({ title: "Success", description: "Response received from backend!" });
+                    console.log("Response from Python backend:", backendData);
                 } else {
-                    console.error('Failed to send data to backend');
+                    toast({ title: "Error", description: "Failed to send data to backend." });
                 }
             } else {
-                alert('Failed to upload image.');
+                toast({ title: "Error", description: "Failed to upload image to Cloudinary." });
             }
         } catch (error) {
-            console.error('Error uploading image:', error);
+            console.error("Error uploading image:", error);
+            toast({ title: "Error", description: "An error occurred during upload." });
         }
     };
 
