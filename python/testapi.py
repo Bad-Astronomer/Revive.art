@@ -4,14 +4,15 @@ from pydantic import BaseModel
 import google.generativeai as genai
 import uvicorn
 import os
+import requests
+from PIL import Image
+from io import BytesIO
 
-# Configure the generative model
 genai.configure(api_key=os.environ["genai_api_key1"])
-model = genai.GenerativeModel(model_name="models/gemini-1.5-flash-latest")
+gemini = genai.GenerativeModel(model_name="models/gemini-1.5-flash-latest")
 
 app = FastAPI()
 
-# CORS configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
@@ -20,7 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Define request body using Pydantic
 class GenerateRequest(BaseModel):
     image_url: str
     prompt: str
@@ -31,12 +31,24 @@ async def root():
 
 @app.post("/generate")
 async def generate(request: GenerateRequest):
-    # You can use both image_url and prompt in your logic here
     print(f"Received image URL: {request.image_url}")
     print(f"Received prompt: {request.prompt}")
 
-    response = model.generate_content(request.prompt)
-    return {"generated_text": response.text}
+    try:
+        response = requests.get(request.image_url)
+        response.raise_for_status()
+    except requests.exceptions.RequestException as e:
+        raise HTTPException(status_code=400, detail=f"Failed to download image: {e}")
+
+    os.makedirs("uploads", exist_ok=True)
+    image_path = os.path.join("uploads", "downloaded_image.jpg")
+    with open(image_path, "wb") as f:
+        f.write(response.content)
+
+    image = Image.open(BytesIO(response.content))
+
+    response = gemini.generate_content(request.prompt)
+    return {"generated_text": response.text, "image_path": image_path}
 
 if __name__ == "__main__":
     uvicorn.run("testapi:app", host="127.0.0.1", port=8000, reload=True)
