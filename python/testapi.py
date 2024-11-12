@@ -7,6 +7,7 @@ import os
 import requests
 from PIL import Image
 from io import BytesIO
+from uuid import uuid4
 
 genai.configure(api_key=os.environ["genai_api_key1"])
 gemini = genai.GenerativeModel(model_name="models/gemini-1.5-flash-latest")
@@ -41,13 +42,28 @@ async def generate(request: GenerateRequest):
         raise HTTPException(status_code=400, detail=f"Failed to download image: {e}")
 
     os.makedirs("uploads", exist_ok=True)
-    image_path = os.path.join("uploads", "downloaded_image.jpg")
+    image_name = f"{uuid4()}.jpg"
+    image_path = os.path.join("uploads", image_name)
     with open(image_path, "wb") as f:
         f.write(response.content)
 
     image = Image.open(BytesIO(response.content))
 
-    response = gemini.generate_content(request.prompt)
+    prompt_template = """
+        Given the image and user prompt, prompt engineer a better version 
+        of the user prompt to colorize the image using Control Net 2.1. 
+        The prompt should be in English. Do not mention name of any characters. 
+        Do not mention the name of the image, model used, or the user. 
+        Important: Keep the colors as described in the user prompt. 
+        If colors are not mentioned in the user prompt, 
+        Imagine how a colored version would look and describe the image with colors. 
+        \n\n User prompt: {prompt}
+    """
+
+    image = genai.upload_file(image_path)
+    response = gemini.generate_content(
+        [image, "\n\n", prompt_template.format(prompt=request.prompt)],
+    )
     return {"generated_text": response.text, "image_path": image_path}
 
 if __name__ == "__main__":

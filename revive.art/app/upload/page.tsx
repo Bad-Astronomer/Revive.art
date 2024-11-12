@@ -28,7 +28,7 @@ export default function Test() {
 
             const cloudinaryData = await cloudinaryResponse.json();
             if (cloudinaryData.secure_url) {
-                alert('Image uploaded successfully!');
+                // alert('Image uploaded successfully!');
                 console.log('Image URL:', cloudinaryData.secure_url);
 
                 // Send both image URL and prompt to the Python backend
