@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from flask_cors import CORS # Import CORS from flask_cors
 import os
-
+import cloudinary.uploader
 from colorize import colourize_image  
 
 
@@ -62,6 +62,16 @@ def upload_file():
         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         
         result = colourize_image(filename=filename, prompt=prompt)
+        
+
+        cloudinary.config(
+            cloud_name='your_cloud_name',
+            api_key='your_api_key',
+            api_secret='your_api_secret'
+        )
+
+        upload_result = cloudinary.uploader.upload(os.path.join(app.config['RESULT_FOLDER'], result))
+        result_url = upload_result.get('secure_url')
         return jsonify({
             "filename": result,
             "prompt": prompt

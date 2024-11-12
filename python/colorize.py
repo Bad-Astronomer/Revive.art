@@ -10,9 +10,9 @@ from utils.data import HWC3, apply_color, resize_image
 from utils.ddim import DDIMSampler
 from utils.model import create_model, load_state_dict
 
-model = create_model('/kaggle/working/Meap-Project/python/cldm_v21.yaml').cpu()
+model = create_model('cldm_v21.yaml').cpu()
 model.load_state_dict(load_state_dict(
-    '/kaggle/working/Meap-Project/python/colorizenet-sd21.ckpt', location='cuda'))
+    'colorizenet-sd21.ckpt', location='cuda'))
 model = model.cuda()
 ddim_sampler = DDIMSampler(model)
 
@@ -58,7 +58,7 @@ def colourize_image(filename, prompt):
 
     results = [x_samples[i] for i in range(num_samples)]
     colored_results = [apply_color(img, result) for result in results]
-    result_dir = "/kaggle/working/Meap-Project/python/results/"
+    result_dir = "results/"
     for i, result in enumerate(colored_results):
         present_file= sorted(os.listdir(result_dir))
         if present_file:
@@ -67,4 +67,4 @@ def colourize_image(filename, prompt):
         
         file_name = f"colorized_{i}.jpg"
         cv2.imwrite(result_dir + file_name, cv2.cvtColor(result, cv2.COLOR_RGB2BGR))
-    return file_name
+    return os.path.join(result, file_name)

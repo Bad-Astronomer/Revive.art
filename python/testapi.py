@@ -8,6 +8,7 @@ import requests
 from PIL import Image
 from io import BytesIO
 from uuid import uuid4
+from colorize import colourize_image
 
 genai.configure(api_key=os.environ["genai_api_key1"])
 gemini = genai.GenerativeModel(model_name="models/gemini-1.5-flash-latest")
@@ -64,6 +65,7 @@ async def generate(request: GenerateRequest):
     response = gemini.generate_content(
         [image, "\n\n", prompt_template.format(prompt=request.prompt)],
     )
+    colourised_image = colourize_image(filename=image_name, prompt=response.text)
     return {"generated_text": response.text, "image_path": image_path}
 
 if __name__ == "__main__":
